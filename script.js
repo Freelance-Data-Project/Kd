@@ -1,19 +1,26 @@
-// Meta Pixel Subscribe Event
+(function(doc){
+  var scriptElm = doc.scripts[doc.scripts.length - 1];
+  var warn = ['[ionicons] Deprecated script, please remove: ' + scriptElm.outerHTML];
 
-document.addEventListener("DOMContentLoaded", function () {
-  const subscribeButtons = document.querySelectorAll("[data-subscribe]");
+  warn.push('To improve performance it is recommended to set the differential scripts in the head as follows:')
 
-  subscribeButtons.forEach(function (button) {
-    button.addEventListener("click", function (event) {
-      event.preventDefault();
+  var parts = scriptElm.src.split('/');
+  parts.pop();
+  parts.push('ionicons');
+  var url = parts.join('/');
 
-      // Meta Pixel Subscribe Event
-      if (typeof fbq === "function") {
-        fbq("track", "Subscribe");
-      }
+  var scriptElm = doc.createElement('script');
+  scriptElm.setAttribute('type', 'module');
+  scriptElm.src = url + '/ionicons.esm.js';
+  doc.head.appendChild(scriptElm);
+  warn.push(scriptElm.outerHTML);
 
-      // Telegram redirect
-      window.location.href = "https://t.me/+2CfR4-D5Fkk2ODBl";
-    });
-  });
-});
+  scriptElm = doc.createElement('script');
+  scriptElm.setAttribute('nomodule', '');
+  scriptElm.src = url + '/ionicons.js';
+  doc.head.appendChild(scriptElm);
+  warn.push(scriptElm.outerHTML);
+
+  console.warn(warn.join('\n'));
+
+})(document);
