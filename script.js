@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     button.addEventListener("click", function () {
       if (typeof fbq === "function") {
         fbq("track", "Subscribe");
-      }value: subValue
-    });currency: "INR"
+      }
+    });
   });
 });
